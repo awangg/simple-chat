@@ -1,0 +1,24 @@
+{
+  "name": "simple-chat",
+  "version": "1.0.0",
+  "description": "A simple real-time chatting client",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awangg/simple-chat.git"
+  },
+  "author": "Andy Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/awangg/simple-chat/issues"
+  },
+  "homepage": "https://github.com/awangg/simple-chat#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  }
+}
