@@ -14,6 +14,7 @@ form {
   position: fixed;
   bottom: 0;
   width: 100%;
+  height: 40px;
 }
 
 form input {
@@ -31,9 +32,11 @@ form button {
 }
 
 #messages {
-  list-style-type:
-  none; margin: 0;
+  list-style-type: none;
+  margin: 0;
   padding: 0;
+  height: 600px;
+  overflow-y: scroll;
 }
 
 #messages li {
@@ -46,6 +49,13 @@ form button {
 
 .notification {
   background-color: #fffec6;
+  font-style: italic;
+  text-align: center;
+}
+
+.error {
+  background-color: #f00;
+  color: #fff;
   font-style: italic;
   text-align: center;
 }

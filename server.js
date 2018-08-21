@@ -28,6 +28,10 @@ io.on('connection', function(socket) {
   })
 
   socket.on('message', function(data) {
-    io.emit('message', data)
+    io.emit('message', { type: 'message', id: data.incomingId, payload: data.message })
+  })
+
+  socket.on('command', function(data) {
+    io.emit('message', { type: 'notification', payload: data.payload })
   })
 })
