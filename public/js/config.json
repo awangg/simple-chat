@@ -1,0 +1,10 @@
+var config = {
+  "extended_command_list": [
+    { "command": "/help", "description": "Displays every command, its authorization level, and its effect", "security": "ALL", "function": "help" },
+    { "command": "/setName [name]", "description": "Changes display name to the inputted name", "security": "ALL", "function": "setName" },
+    { "command": "/emphasize [message]", "description": "Emphasizes the inputted message", "security": "ALL", "function": "emphasize" },
+    { "command": "/id [name]", "description": "Gets the id for the specified name (N/I)", "security": "ALL", "function": "id" },
+    { "command": "/mute [id]", "description": "Removes future messages from the specified id (N/I)", "security": "ALL", "function": "mute" },
+  ],
+  "command_list": [ "/help", "/setName", "/emphasize", "/id", "/mute" ]
+}

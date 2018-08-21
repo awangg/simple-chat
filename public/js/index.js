@@ -1,8 +1,14 @@
+var conf = config
+var descriptiveCommands = conf.extended_command_list
+var commands = conf.command_list
+
 var id = -1
 var name = ""
 
+var socket = io()
+
 $(function() {
-  var socket = io()
+
   /* Set height to not encroach on input area */
   $('#messages').css('height', $(document).height() - 80)
 
@@ -21,9 +27,13 @@ $(function() {
 
   $('form').submit( function() {
     var incomingMessage = $('#content').val()
-    
+
     if(incomingMessage.charAt(0) == '/') {
       /* Command */
+      var parameters = incomingMessage.split(' ')
+      if(commands.includes(parameters[0])) {
+        window[descriptiveCommands[commands.indexOf(parameters[0])].function](descriptiveCommands, parameters.slice(1))
+      }
     }else {
       /* Regular Message */
       socket.emit('message', { message: incomingMessage, userId: id, userName: name })
@@ -38,6 +48,10 @@ $(function() {
     if(data.type == 'notification') {
 
       $('#messages').append($('<li></li>').attr('class', 'notification').text(data.payload))
+
+    }else if(data.type == 'emphasis') {
+
+      $('#messages').append($('<li></li>').attr('class', 'emphasized').text('*' + data.name + '* - ' + data.payload))
 
     }else if(data.type == 'message') {
 

@@ -32,6 +32,10 @@ io.on('connection', function(socket) {
   })
 
   socket.on('command', function(data) {
-    io.emit('message', { type: 'notification', payload: data.payload })
+    if(!data.type) {
+      io.emit('message', { type: 'notification', payload: data.payload })
+    }else {
+      io.emit('message', { type: data.type, name: data.name, payload: data.payload })
+    }
   })
 })
