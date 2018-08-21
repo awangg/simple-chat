@@ -1,3 +1,3 @@
 ﻿# Simple-Chat
  
- Made with Socket.IO and NodeJS. https://socket.io/get-started/chat
+ Made with Socket.IO and NodeJS. Framework made with https://socket.io/get-started/chat
