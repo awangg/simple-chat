@@ -23,6 +23,7 @@ server.listen(port, function() {
 var users = {}
 var authedUsers = []
 var globallyMuted = []
+var freeze = false
 
 /* Keyphrase Config */
 var keySchema = new Schema( {
@@ -51,7 +52,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('message', function(data) {
-    if(!globallyMuted.includes(parseInt(data.userId))) {
+    if(!globallyMuted.includes(parseInt(data.userId)) && !freeze) {
       io.emit('message', { type: 'message', id: data.userId, name: data.userName, avatarId: data.imageId, payload: data.message })
     }
   })
@@ -89,6 +90,27 @@ io.on('connection', function(socket) {
   socket.on('globalMute', function(data) {
     if(authedUsers.includes(data.actorId)) {
       globallyMuted.push(parseInt(data.victimId))
+      io.emit('success', { payload: '#' + data.victimId + ' was muted' })
+    }else {
+      io.emit('failedAuth', { payload: 'You are not authorized to use this command '})
+    }
+  })
+
+  socket.on('freezeThread', function(data) {
+    if(authedUsers.includes(data.actorId)) {
+      freeze = true
+      io.emit('success', { payload: 'Thread frozen' })
+    }else {
+      io.emit('failedAuth', { payload: 'You are not authorized to use this command '})
+    }
+  })
+
+  socket.on('unfreezeThread', function(data) {
+    if(authedUsers.includes(data.actorId)) {
+      freeze = false
+      io.emit('success', { payload: 'Thread unfrozen' })
+    }else {
+      io.emit('failedAuth', { payload: 'You are not authorized to use this command '})
     }
   })
 })

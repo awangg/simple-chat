@@ -7,7 +7,7 @@ var commands = conf.command_list
 function help(json, parameter) {
   /* Empty parameter */
   descriptiveCommands.forEach( function(object) {
-    $('#messages').append($('<li></li>').attr('class', 'return').text(object.command + ' - ' + object.description))
+    if(object.security) $('#messages').append($('<li></li>').attr('class', 'return').text(object.command + ' - ' + object.description))
   })
 }
 
@@ -69,14 +69,32 @@ function auth(json, parameter) {
   socket.emit('authAttempt', { id: id, passphrase: parameter[0] })
   socket.on('failedAuth', function() {
     $('#messages').append($('<li></li>').attr('class', 'error return').text('Incorrect Passphrase'))
+    moveToBottom()
   })
   socket.on('successAuth', function() {
     $('#messages').append($('<li></li>').attr('class', 'return').text('Authorization successful'))
+    descriptiveCommands.forEach( function(object) {
+      if(object.security === false) {
+        object.security = true
+      }
+    })
+    moveToBottom()
   })
 }
 
 function gmute(json, parameter) {
   socket.emit('globalMute', { actorId: id, victimId: parameter[0] })
+  checkAuth()
+}
+
+function freeze(json, parameter) {
+  socket.emit('freezeThread', { actorId: id })
+  checkAuth()
+}
+
+function unfreeze(json, parameter) {
+  socket.emit('unfreezeThread', { actorId: id })
+  checkAuth()
 }
 
 /* Helper Functions */
@@ -86,4 +104,11 @@ function buildString(arr) {
     completeString += chunk + ' '
   })
   return completeString.trim()
+}
+
+function checkAuth() {
+  socket.on('failedAuth', function(data) {
+    $('#messages').append($('<li></li>').attr('class', 'error return').text(data.payload))
+    moveToBottom()
+  })
 }

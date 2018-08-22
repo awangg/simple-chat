@@ -1,16 +1,17 @@
 var config = {
   "extended_command_list": [
-    { "command": "/help", "description": "Displays every command, its authorization level, and its effect", "security": "ALL", "function": "help" },
-    { "command": "/list", "description": "Gets a list of users and corresponding ids", "security": "ALL", "function": "list" },
-    { "command": "/setName [name]", "description": "Changes display name to the specified name", "security": "ALL", "function": "setName" },
-    { "command": "/emphasize [message]", "description": "Emphasizes the specified message", "security": "ALL", "function": "emphasize" },
-    { "command": "/getId [name]", "description": "Gets the id for the specified name", "security": "ALL", "function": "getId" },
-    { "command": "/getName [id]", "description": "Gets the name for the specified id", "security": "ALL", "function": "getName" },
-    { "command": "/mute [id]", "description": "Removes future messages from the specified id", "security": "ALL", "function": "mute" },
-    { "command": "/mute [id]", "description": "Removes user from mute list", "security": "ALL", "function": "unmute" },
-    { "command": "/auth [password]", "description": "Grants user authorization for higher level commands", "security": "ALL", "function": "auth" },
-    { "command": "/gmute [id]", "description": "Prevents user from sending messages globally", "security": "ADMIN", "function": "gmute"},
-    { "command": "/freeze", "description": "Freezes thread in current state", "security": "ADMIN", "function": "freeze"},
+    { "command": "/help", "description": "Displays every command, its authorization level, and its effect", "security": true, "function": "help" },
+    { "command": "/list", "description": "Gets a list of users and corresponding ids", "security": true, "function": "list" },
+    { "command": "/setName [name]", "description": "Changes display name to the specified name", "security": true, "function": "setName" },
+    { "command": "/emphasize [message]", "description": "Emphasizes the specified message", "security": true, "function": "emphasize" },
+    { "command": "/getId [name]", "description": "Gets the id for the specified name", "security": true, "function": "getId" },
+    { "command": "/getName [id]", "description": "Gets the name for the specified id", "security": true, "function": "getName" },
+    { "command": "/mute [id]", "description": "Removes future messages from the specified id", "security": true, "function": "mute" },
+    { "command": "/mute [id]", "description": "Removes user from mute list", "security": true, "function": "unmute" },
+    { "command": "/auth [password]", "description": "Grants user authorization for higher level commands", "security": true, "function": "auth" },
+    { "command": "/gmute [id]", "description": "Prevents user from sending messages globally", "security": false, "function": "gmute"},
+    { "command": "/freezeThread", "description": "Freezes thread in current state", "security": false, "function": "freeze"},
+    { "command": "/unfreezeThread", "description": "Unfreezes thread", "security": false, "function": "unfreeze"},
   ],
-  "command_list": [ "/help", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute", "/auth", "/gmute", "/freeze" ]
+  "command_list": [ "/help", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute", "/auth", "/gmute", "/freezethread", "/unfreezethread" ]
 }

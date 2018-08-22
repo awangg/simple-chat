@@ -154,6 +154,11 @@ $(function() {
 
     }
   })
+
+  socket.on('success', function(data) {
+    $('#messages').append($('<li></li>').attr('class', 'return').css('font-size', '24px').css('font-weight', 'bold').text(data.payload))
+    moveToBottom()
+  })
 })
 
 function moveToBottom() {
