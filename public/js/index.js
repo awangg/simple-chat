@@ -4,7 +4,9 @@ var commands = conf.command_list
 
 var id = -1
 var name = ""
+
 var users = []
+var muted = []
 
 var socket = io()
 
@@ -63,26 +65,30 @@ $(function() {
 
   socket.on('message', function(data) {
 
-    if(data.type == 'notification') {
+    if(!muted.includes(data.id)) {
 
-      $('#messages').append($('<li></li>').attr('class', 'notification').text(data.payload))
+      if(data.type == 'notification') {
 
-    }else if(data.type == 'emphasis') {
+        $('#messages').append($('<li></li>').attr('class', 'notification').text(data.payload))
 
-      $('#messages').append($('<li></li>').attr('class', 'emphasized').text('[' + data.name + '] - ' + data.payload))
+      }else if(data.type == 'emphasis') {
 
-    }else if(data.type == 'message') {
+        $('#messages').append($('<li></li>').attr('class', 'emphasized').text('[' + data.name + '] - ' + data.payload))
 
-      if(id === data.id) {
-        $('#messages').append($('<li></li>').attr('class', 'self-msg').text('me: ' + data.payload))
-      }else {
-        $('#messages').append($('<li></li>').attr('class', 'other-msg').text(data.name + ': ' + data.payload))
+      }else if(data.type == 'message') {
+
+        if(id === data.id) {
+          $('#messages').append($('<li></li>').attr('class', 'self-msg').text('me: ' + data.payload))
+        }else {
+          $('#messages').append($('<li></li>').attr('class', 'other-msg').text(data.name + ': ' + data.payload))
+        }
+
       }
 
-    }
+      /* Makes sure the box stays on the bottom */
+      var box = document.getElementById('messages')
+      box.scrollTop = box.scrollHeight
 
-    /* Makes sure the box stays on the bottom */
-    var box = document.getElementById('messages')
-    box.scrollTop = box.scrollHeight
+    }
   })
 })

@@ -4,9 +4,10 @@ var config = {
     { "command": "/list", "description": "Gets a list of users and corresponding ids", "security": "ALL", "function": "list" },
     { "command": "/setName [name]", "description": "Changes display name to the specified name", "security": "ALL", "function": "setName" },
     { "command": "/emphasize [message]", "description": "Emphasizes the specified message", "security": "ALL", "function": "emphasize" },
-    { "command": "/getId [name]", "description": "Gets the id for the specified name (N/I)", "security": "ALL", "function": "getId" },
-    { "command": "/getName [id]", "description": "Gets the name for the specified id (N/I)", "security": "ALL", "function": "getName" },
+    { "command": "/getId [name]", "description": "Gets the id for the specified name", "security": "ALL", "function": "getId" },
+    { "command": "/getName [id]", "description": "Gets the name for the specified id", "security": "ALL", "function": "getName" },
     { "command": "/mute [id]", "description": "Removes future messages from the specified id (N/I)", "security": "ALL", "function": "mute" },
+    { "command": "/mute [id]", "description": "Removes user from mute list (N/I)", "security": "ALL", "function": "unmute" }
   ],
-  "command_list": [ "/help", "/list", "/setName", "/emphasize", "/getId", "/getName", "/mute" ]
+  "command_list": [ "/help", "/list", "/setName", "/emphasize", "/getId", "/getName", "/mute", "/unmute" ]
 }

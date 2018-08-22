@@ -22,30 +22,52 @@ function list(json, parameter) {
 
 function setName(json, parameter) {
   /* Parameter is the new name */
-  var completeString = ""
-  parameter.forEach( function(chunk) {
-    completeString += chunk + ' '
-  })
   var oldName = name
-  name = completeString.trim()
+  name = buildString(parameter)
   socket.emit('changeName', { id: id, name: name, payload: 'User ' + oldName + ' changed their name to ' + name })
 }
 
 function emphasize(json, parameter) {
   /* Parameter is the specified message */
-  var completeString = ""
-  parameter.forEach( function(chunk) {
-    completeString += chunk + ' '
-  })
-  var payloadString = completeString.trim()
+  var payloadString = buildString(parameter)
   socket.emit('emphasizeMessage', { name: name, payload: payloadString })
 }
 
 function getId(json, parameter) {
-  console.log(parameter)
+  var checkString = buildString(parameter)
   Object.keys(users).forEach( function(id) {
-    if(users[id].name == parameter) {
+    if(users[id].name == checkString) {
       $('#messages').append($('<li></li>').attr('class', 'notification').text('User \"' + parameter + '\" has ID #' + id))
     }
   })
+}
+
+function getName(json, parameter) {
+  Object.keys(users).forEach( function(id) {
+    if(id == parameter) {
+      $('#messages').append($('<li></li>').attr('class', 'notification').text('User #' + id + ' is named \"' + users[id].name + '\"'))
+    }
+  })
+}
+
+function mute(json, parameter) {
+  muted.push(parseInt(parameter[0]))
+  $('#messages').append($('<li></li>').attr('class', 'notification').text('You muted user #' + parameter))
+}
+
+function unmute(json, parameter) {
+  var param = parseInt(parameter)
+  if(muted.includes(param)) {
+    muted.splice(muted.indexOf(param), 1)
+  }
+  $('#messages').append($('<li></li>').attr('class', 'notification').text('You unmuted user #' + parameter))
+}
+
+/* Helper Functions */
+function buildString(arr) {
+  var completeString = ""
+  arr.forEach( function(chunk) {
+    completeString += chunk + ' '
+  })
+  return completeString.trim()
 }
