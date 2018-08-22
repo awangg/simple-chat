@@ -5,7 +5,7 @@ var commands = conf.command_list
 function help(json, parameter) {
   /* Empty parameter */
   descriptiveCommands.forEach( function(object) {
-    $('#messages').append($('<li></li>').attr('class', 'notification').text('[' + object.security + '] ' + object.command + ' - ' + object.description))
+    $('#messages').append($('<li></li>').attr('class', 'notification').text('(' + object.security + ') ' + object.command + ' - ' + object.description))
   })
 }
 
