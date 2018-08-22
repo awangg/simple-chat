@@ -27,13 +27,15 @@ $(function() {
   })
 
   socket.on('newuser', function(incomingId) {
-    $('#messages').append($('<li></li>').attr('class', 'notification').text('User #' + incomingId + ' has arrived'))
+    $('#messages').append($('<li></li>').attr('class', 'notification return').text('User #' + incomingId + ' has arrived'))
     users[incomingId] = { name: incomingId, uid: incomingId }
+    moveToBottom()
   })
 
   socket.on('lostuser', function(data) {
-    $('#messages').append($('<li></li>').attr('class', 'notification').text('User ' + data.name + ' (#' + data.id + ') has left'))
+    $('#messages').append($('<li></li>').attr('class', 'notification return').text('User ' + data.name + ' (#' + data.id + ') has left'))
     delete users[data.id]
+    moveToBottom()
   })
 
   $('form').submit( function() {
@@ -46,15 +48,13 @@ $(function() {
         try {
           window[descriptiveCommands[commands.indexOf(parameters[0].toLowerCase())].function](descriptiveCommands, parameters.slice(1))
         } catch (err) {
-          $('#messages').append($('<li></li>').attr('class', 'error').text('Invalid Command'))
+          $('#messages').append($('<li></li>').attr('class', 'error return').text('Invalid Command'))
         }
       }else {
-        $('#messages').append($('<li></li>').attr('class', 'error').text('Invalid Command'))
+        $('#messages').append($('<li></li>').attr('class', 'error return').text('Invalid Command'))
       }
 
-      /* Keep scroll bar at bottom */
-      var box = document.getElementById('messages')
-      box.scrollTop = box.scrollHeight
+      moveToBottom()
 
     }else if(! /^\s+$/.test(incomingMessage) && incomingMessage.length > 0) {
       /* Regular Message */
@@ -75,11 +75,11 @@ $(function() {
 
       if(data.type == 'notification') {
 
-        $('#messages').append($('<li></li>').attr('class', 'notification row justify-content-center').text(data.payload))
+        $('#messages').append($('<li></li>').attr('class', 'notification return').text(data.payload))
 
       }else if(data.type == 'emphasis') {
 
-        $('#messages').append($('<li></li>').attr('class', 'emphasized row justify-content-center').text('[' + data.name + '] - ' + data.payload))
+        $('#messages').append($('<li></li>').attr('class', 'emphasized return').text('[' + data.name + '] - ' + data.payload))
 
       }else if(data.type == 'message') {
 
@@ -150,10 +150,13 @@ $(function() {
 
       }
 
-      /* Keep scroll bar at bottom */
-      var box = document.getElementById('messages')
-      box.scrollTop = box.scrollHeight
+      moveToBottom()
 
     }
   })
 })
+
+function moveToBottom() {
+  var box = document.getElementById('messages')
+  box.scrollTop = box.scrollHeight
+}
