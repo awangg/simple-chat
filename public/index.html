@@ -8,7 +8,18 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
   </head>
   <body>
-    <ul id="messages"></ul>
+    <ul id="messages">
+      <li class="emphasized"> Available Commands: </li>
+      <li class="psa"> <span class="command">/help</span> - Displays every command, its authorization level, and its effect </li>
+      <li class="psa"> <span class="command">/list</span> - Gets a list of users and corresponding ids </li>
+      <li class="psa"> <span class="command">/setName [name]</span> - Changes display name to the specified name </li>
+      <li class="psa"> <span class="command">/emphasize [message]</span> - Emphasizes the specified message </li>
+      <li class="psa"> <span class="command">/getId [name]</span> - Gets the id for the specified name </li>
+      <li class="psa"> <span class="command">/getName [id]</span> - Gets the name for the specified id </li>
+      <li class="psa"> <span class="command">/mute [id]</span> - Removes future messages from the specified id </li>
+      <li class="psa"> <span class="command">/unmute [id]</span> - Removes user from mute list </li>
+      <hr />
+    </ul>
     <form>
       <input id="content" type="text" placeholder="Message..." autocomplete="off" />
     </form>

@@ -62,3 +62,14 @@ form input {
   text-align: center;
   color: #f00;
 }
+
+.psa {
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+}
+
+.command {
+  color: #6ba3ff;
+  text-decoration: underline;
+}
