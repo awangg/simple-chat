@@ -36,7 +36,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('message', function(data) {
-    io.emit('message', { type: 'message', id: data.userId, name: data.userName, payload: data.message })
+    io.emit('message', { type: 'message', id: data.userId, name: data.userName, avatarId: data.imageId, payload: data.message })
   })
 
   socket.on('changeName', function(data) {

@@ -58,7 +58,7 @@ $(function() {
 
     }else if(! /^\s+$/.test(incomingMessage) && incomingMessage.length > 0) {
       /* Regular Message */
-      socket.emit('message', { message: incomingMessage, userId: id, userName: name })
+      socket.emit('message', { message: incomingMessage, userId: id, userName: name, imageId: avatarNum })
     }
 
     $('#content').val('')
@@ -135,7 +135,7 @@ $(function() {
               .append($('<div></div>')
                 .attr('class', 'avatar ml-2')
                 .append($('<img></img>')
-                  .attr('src', 'assets/avatars/avatar-'+avatarNum+'.png')
+                  .attr('src', 'assets/avatars/avatar-'+data.avatarId+'.png')
                   .attr('width', '75')
                   .attr('height', '75')
                   .attr('align', 'right')
