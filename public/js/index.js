@@ -39,9 +39,16 @@ $(function() {
       /* Command */
       var parameters = incomingMessage.split(' ')
       if(commands.includes(parameters[0])) {
-        window[descriptiveCommands[commands.indexOf(parameters[0])].function](descriptiveCommands, parameters.slice(1))
+        try {
+          window[descriptiveCommands[commands.indexOf(parameters[0])].function](descriptiveCommands, parameters.slice(1))
+        } catch (err) {
+          $('#messages').append($('<li></li>').attr('class', 'error').text('Invalid Command'))
+        }
+      }else {
+        $('#messages').append($('<li></li>').attr('class', 'error').text('Invalid Command'))
       }
-    }else {
+
+    }else if(! /^\s+$/.test(incomingMessage) && incomingMessage.length > 0) {
       /* Regular Message */
       socket.emit('message', { message: incomingMessage, userId: id, userName: name })
     }
