@@ -54,6 +54,7 @@ $(function() {
         $('#messages').append($('<li></li>').attr('class', 'error return').text('Invalid Command'))
       }
 
+      $('#messages').append($('<hr>'))
       moveToBottom()
 
     }else if(! /^\s+$/.test(incomingMessage) && incomingMessage.length > 0) {
