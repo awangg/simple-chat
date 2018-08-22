@@ -55,10 +55,17 @@ form {
   color: #f00;
 }
 
-.psa {
+.psa, .command-return {
   font-weight: bold;
-  font-size: 14px;
   text-align: center;
+}
+
+.psa {
+  font-size: 14px;
+}
+
+.command-return {
+  font-size: 18px;
 }
 
 .command {

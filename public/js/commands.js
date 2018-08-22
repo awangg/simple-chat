@@ -5,7 +5,7 @@ var commands = conf.command_list
 function help(json, parameter) {
   /* Empty parameter */
   descriptiveCommands.forEach( function(object) {
-    $('#messages').append($('<li></li>').attr('class', 'psa').text(object.command + ' - ' + object.description))
+    $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text(object.command + ' - ' + object.description))
   })
 }
 
@@ -13,9 +13,9 @@ function list(json, parameter) {
   /* Empty parameter */
   Object.keys(users).forEach( function(id) {
     if(users[id].uid === this.id) {
-      $('#messages').append($('<li></li>').attr('class', 'psa').text('[' + users[id].uid + '] ' + users[id].name + ' (me)'))
+      $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text('[' + users[id].uid + '] ' + users[id].name + ' (me)'))
     }else {
-      $('#messages').append($('<li></li>').attr('class', 'psa').text('[' + users[id].uid + '] ' + users[id].name))
+      $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text('[' + users[id].uid + '] ' + users[id].name))
     }
   })
 }
@@ -37,7 +37,7 @@ function getId(json, parameter) {
   var checkString = buildString(parameter)
   Object.keys(users).forEach( function(id) {
     if(users[id].name == checkString) {
-      $('#messages').append($('<li></li>').attr('class', 'psa').text('User \"' + parameter + '\" has ID #' + id))
+      $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text('User \"' + checkString + '\" has ID #' + id))
     }
   })
 }
@@ -45,14 +45,14 @@ function getId(json, parameter) {
 function getName(json, parameter) {
   Object.keys(users).forEach( function(id) {
     if(id == parameter) {
-      $('#messages').append($('<li></li>').attr('class', 'psa').text('User #' + id + ' is named \"' + users[id].name + '\"'))
+      $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text('User #' + id + ' is named \"' + users[id].name + '\"'))
     }
   })
 }
 
 function mute(json, parameter) {
   muted.push(parseInt(parameter[0]))
-  $('#messages').append($('<li></li>').attr('class', 'psa').text('You muted user #' + parameter))
+  $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text('You muted user #' + parameter))
 }
 
 function unmute(json, parameter) {
@@ -60,7 +60,7 @@ function unmute(json, parameter) {
   if(muted.includes(param)) {
     muted.splice(muted.indexOf(param), 1)
   }
-  $('#messages').append($('<li></li>').attr('class', 'psa').text('You unmuted user #' + parameter))
+  $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text('You unmuted user #' + parameter))
 }
 
 /* Helper Functions */

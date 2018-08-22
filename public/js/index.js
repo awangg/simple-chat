@@ -75,11 +75,11 @@ $(function() {
 
       if(data.type == 'notification') {
 
-        $('#messages').append($('<li></li>').attr('class', 'notification').text(data.payload))
+        $('#messages').append($('<li></li>').attr('class', 'notification row justify-content-center').text(data.payload))
 
       }else if(data.type == 'emphasis') {
 
-        $('#messages').append($('<li></li>').attr('class', 'emphasized').text('[' + data.name + '] - ' + data.payload))
+        $('#messages').append($('<li></li>').attr('class', 'emphasized row justify-content-center').text('[' + data.name + '] - ' + data.payload))
 
       }else if(data.type == 'message') {
 
@@ -118,7 +118,7 @@ $(function() {
           $('#messages').append($('<li></li>')
             .attr('class', 'row mr-1')
             .css('float', 'right')
-            .css('width', '90%')
+            .css('width', '100%')
             .append($('<div></div>')
               .attr('class', 'msg-container row justify-content-end')
               .append($('<div></div>')
