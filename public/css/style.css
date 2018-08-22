@@ -20,6 +20,7 @@ form {
   padding: 0;
   height: 600px;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 #messages li {
@@ -28,8 +29,9 @@ form {
 
 /* Message Types */
 
-.other-msg {
-  background-color: #eee;
+.msg-container {
+  display: flex;
+  width: 100%;
 }
 
 .notification {

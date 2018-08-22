@@ -6,6 +6,7 @@ var commands = conf.command_list
 /* User-specific information */
 var id = -1
 var name = ""
+var avatarNum = Math.floor(Math.random() * 8) + 1
 var users = []
 var muted = []
 
@@ -83,9 +84,67 @@ $(function() {
       }else if(data.type == 'message') {
 
         if(id === data.id) {
-          $('#messages').append($('<li></li>').attr('class', 'self-msg').text('me: ' + data.payload))
+
+          $('#messages').append($('<li></li>')
+            .attr('class', 'row ml-2')
+            .css('width', '50%')
+            .append($('<div></div>')
+              .attr('class', 'msg-container')
+              .append($('<div></div>')
+                .attr('class', 'avatar mr-2')
+                .append($('<img></img>')
+                  .attr('src', 'assets/avatars/avatar-'+avatarNum+'.png')
+                  .attr('width', '75')
+                  .attr('height', '75')
+                  .attr('align', 'left')
+                  .attr('alt', 'user avatar')
+                )
+              )
+              .append($('<div></div>')
+                .attr('class', 'msg-text')
+                .css('word-break', 'break-all')
+                .append($('<h6></h6>')
+                  .text('Me')
+                )
+                .append($('<p></p>')
+                  .text(data.payload)
+                )
+              )
+            )
+          )
+
         }else {
-          $('#messages').append($('<li></li>').attr('class', 'other-msg').text(data.name + ': ' + data.payload))
+
+          $('#messages').append($('<li></li>')
+            .attr('class', 'row mr-1')
+            .css('float', 'right')
+            .css('width', '90%')
+            .append($('<div></div>')
+              .attr('class', 'msg-container row justify-content-end')
+              .append($('<div></div>')
+                .attr('class', 'msg-text text-right')
+                .css('word-break', 'break-all')
+                .css('width', '50%')
+                .append($('<h6></h6>')
+                  .text(data.name)
+                )
+                .append($('<p></p>')
+                  .text(data.payload)
+                )
+              )
+              .append($('<div></div>')
+                .attr('class', 'avatar ml-2')
+                .append($('<img></img>')
+                  .attr('src', 'assets/avatars/avatar-'+avatarNum+'.png')
+                  .attr('width', '75')
+                  .attr('height', '75')
+                  .attr('align', 'right')
+                  .attr('alt', 'user avatar')
+                )
+              )
+            )
+          )
+
         }
 
       }
