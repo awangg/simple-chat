@@ -6,8 +6,11 @@ var config = {
     { "command": "/emphasize [message]", "description": "Emphasizes the specified message", "security": "ALL", "function": "emphasize" },
     { "command": "/getId [name]", "description": "Gets the id for the specified name", "security": "ALL", "function": "getId" },
     { "command": "/getName [id]", "description": "Gets the name for the specified id", "security": "ALL", "function": "getName" },
-    { "command": "/mute [id]", "description": "Removes future messages from the specified id (N/I)", "security": "ALL", "function": "mute" },
-    { "command": "/mute [id]", "description": "Removes user from mute list (N/I)", "security": "ALL", "function": "unmute" }
+    { "command": "/mute [id]", "description": "Removes future messages from the specified id", "security": "ALL", "function": "mute" },
+    { "command": "/mute [id]", "description": "Removes user from mute list", "security": "ALL", "function": "unmute" },
+    { "command": "/auth [password]", "description": "Grants user authorization for higher level commands", "security": "ALL", "function": "auth" },
+    { "command": "/gmute [id]", "description": "Prevents user from sending messages globally", "security": "ADMIN", "function": "gmute"},
+    { "command": "/freeze", "description": "Freezes thread in current state", "security": "ADMIN", "function": "freeze"},
   ],
-  "command_list": [ "/help", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute" ]
+  "command_list": [ "/help", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute", "/auth", "/gmute", "/freeze" ]
 }

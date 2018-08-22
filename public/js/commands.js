@@ -2,6 +2,8 @@ var conf = config;
 var descriptiveCommands = conf.extended_command_list
 var commands = conf.command_list
 
+/* Command Functions */
+
 function help(json, parameter) {
   /* Empty parameter */
   descriptiveCommands.forEach( function(object) {
@@ -61,6 +63,20 @@ function unmute(json, parameter) {
     muted.splice(muted.indexOf(param), 1)
   }
   $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text('You unmuted user #' + parameter))
+}
+
+function auth(json, parameter) {
+  socket.emit('authAttempt', { id: id, passphrase: parameter[0] })
+  socket.on('failedAuth', function() {
+    $('#messages').append($('<li></li>').attr('class', 'error row justify-content-center').text('Incorrect Passphrase'))
+  })
+  socket.on('successAuth', function() {
+    $('#messages').append($('<li></li>').attr('class', 'command-return row justify-content-center').text('Authorization successful'))
+  })
+}
+
+function gmute(json, parameter) {
+  socket.emit('globalMute', { actorId: id, victimId: parameter[0] })
 }
 
 /* Helper Functions */

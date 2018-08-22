@@ -3,6 +3,7 @@ var express = require('express')
 var app = express()
 var server = require('http').Server(app)
 var io = require('socket.io').listen(server)
+var mongoose = require('mongoose')
 
 /* Config */
 app.use(express.static(__dirname + '/public'))
@@ -10,13 +11,24 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html')
 })
 
+var Schema = mongoose.Schema
+mongoose.connect('mongodb://localhost/chat-auth')
+
 /* Listening */
-var port = process.env.PORT || 80
+var port = process.env.PORT || 8081
 server.listen(port, function() {
   console.log('Listening on ' + port)
 })
 
 var users = {}
+var authedUsers = []
+var globallyMuted = []
+
+/* Keyphrase Config */
+var keySchema = new Schema( {
+  phrase: { type: String, trim: true }
+})
+var Key = mongoose.model('keyphrase', keySchema)
 
 /* Socket */
 io.on('connection', function(socket) {
@@ -32,11 +44,16 @@ io.on('connection', function(socket) {
 
   socket.on('disconnect', function() {
     io.emit('lostuser', { id: id, name: users[id].name })
+    if(authedUsers.includes(id)) {
+      authedUsers.splice(authedUsers.indexOf(id), 1)
+    }
     delete users[id]
   })
 
   socket.on('message', function(data) {
-    io.emit('message', { type: 'message', id: data.userId, name: data.userName, avatarId: data.imageId, payload: data.message })
+    if(!globallyMuted.includes(parseInt(data.userId))) {
+      io.emit('message', { type: 'message', id: data.userId, name: data.userName, avatarId: data.imageId, payload: data.message })
+    }
   })
 
   socket.on('changeName', function(data) {
@@ -51,5 +68,27 @@ io.on('connection', function(socket) {
 
   socket.on('display', function(data) {
     io.emit('message', { type: 'notification', payload: data.payload })
+  })
+
+  socket.on('authAttempt', function(data) {
+    Key.findOne( { phrase: data.passphrase }, function(err, key) {
+      if(err) {
+        throw err
+      }
+      if(key === null) {
+        io.emit('failedAuth')
+      }else {
+        if(key.phrase === data.passphrase) {
+          authedUsers.push(data.id)
+          io.emit('successAuth')
+        }
+      }
+    })
+  })
+
+  socket.on('globalMute', function(data) {
+    if(authedUsers.includes(data.actorId)) {
+      globallyMuted.push(parseInt(data.victimId))
+    }
   })
 })
