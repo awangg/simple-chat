@@ -15,7 +15,7 @@ var Schema = mongoose.Schema
 mongoose.connect('mongodb://localhost/chat-auth')
 
 /* Listening */
-var port = process.env.PORT || 8081
+var port = process.env.PORT || 80
 server.listen(port, function() {
   console.log('Listening on ' + port)
 })
