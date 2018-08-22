@@ -8,10 +8,14 @@ Download MongoDB and Robo3T. Change line 15 in server.js to match the database n
 
 Run with "node server.js" on the package level and navigate to https://localhost:80 to begin chatting in real time.
 
-# Resources/Dependencies (can also look at package.json)
+# Dependencies (can also look at package.json)
 
-https://socket.io/get-started/chat
+SocketIO
+
 NodeJS
+
 Bootstrap
+
 MongoDB/Mongoose
+
 Express
