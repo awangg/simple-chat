@@ -41,6 +41,11 @@ function emphasize(json, parameter) {
   socket.emit('emphasizeMessage', { name: name, payload: payloadString })
 }
 
-function id(json, parameter) {
-
+function getId(json, parameter) {
+  console.log(parameter)
+  Object.keys(users).forEach( function(id) {
+    if(users[id].name == parameter) {
+      $('#messages').append($('<li></li>').attr('class', 'notification').text('User \"' + parameter + '\" has ID #' + id))
+    }
+  })
 }
