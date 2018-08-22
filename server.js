@@ -46,6 +46,6 @@ io.on('connection', function(socket) {
   })
 
   socket.on('emphasizeMessage', function(data) {
-    io.emit( 'emphasis', { type: 'emphasis', name: data.name, payload: data.payload })
+    io.emit('message', { type: 'emphasis', name: data.name, payload: data.payload })
   })
 })
