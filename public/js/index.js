@@ -50,6 +50,10 @@ $(function() {
         $('#messages').append($('<li></li>').attr('class', 'error').text('Invalid Command'))
       }
 
+      /* Keep scroll bar at bottom */
+      var box = document.getElementById('messages')
+      box.scrollTop = box.scrollHeight
+
     }else if(! /^\s+$/.test(incomingMessage) && incomingMessage.length > 0) {
       /* Regular Message */
       socket.emit('message', { message: incomingMessage, userId: id, userName: name })
@@ -85,7 +89,7 @@ $(function() {
 
       }
 
-      /* Makes sure the box stays on the bottom */
+      /* Keep scroll bar at bottom */
       var box = document.getElementById('messages')
       box.scrollTop = box.scrollHeight
 
