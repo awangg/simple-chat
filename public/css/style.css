@@ -38,6 +38,7 @@ form {
   background-color: #fffec6;
   font-style: italic;
   text-align: center;
+  width: 100%;
 }
 
 .error {
@@ -45,10 +46,12 @@ form {
   color: #fff;
   font-style: italic;
   text-align: center;
+  width: 100%;
 }
 
 .emphasized {
-  font-size: 24px;
+  width: 100%;
+  font-size: 24px;f
   font-style: italic;
   font-weight: bold;
   text-align: center;
@@ -58,6 +61,7 @@ form {
 .psa, .command-return {
   font-weight: bold;
   text-align: center;
+  width: 100%;
 }
 
 .psa {
@@ -65,7 +69,6 @@ form {
 }
 
 .command-return {
-  width: 100%;
   font-size: 18px;
 }
 
