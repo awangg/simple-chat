@@ -4,6 +4,7 @@ var commands = conf.command_list
 
 var id = -1
 var name = ""
+var users = []
 
 var socket = io()
 
@@ -17,12 +18,18 @@ $(function() {
     name = id
   })
 
+  socket.on('currentUsers', function(data) {
+    users = data
+  })
+
   socket.on('newuser', function(incomingId) {
     $('#messages').append($('<li></li>').attr('class', 'notification').text('User #' + incomingId + ' has arrived'))
+    users[incomingId] = { name: incomingId, uid: incomingId }
   })
 
   socket.on('lostuser', function(exitingId) {
     $('#messages').append($('<li></li>').attr('class', 'notification').text('User #' + exitingId + ' has left'))
+    delete users[exitingId]
   })
 
   $('form').submit( function() {
@@ -43,6 +50,10 @@ $(function() {
     return false
   })
 
+  socket.on('nameChange', function(data) {
+    users[data.id].name = data.name
+  })
+
   socket.on('message', function(data) {
 
     if(data.type == 'notification') {
@@ -51,7 +62,7 @@ $(function() {
 
     }else if(data.type == 'emphasis') {
 
-      $('#messages').append($('<li></li>').attr('class', 'emphasized').text('*' + data.name + '* - ' + data.payload))
+      $('#messages').append($('<li></li>').attr('class', 'emphasized').text('[' + data.name + '] - ' + data.payload))
 
     }else if(data.type == 'message') {
 

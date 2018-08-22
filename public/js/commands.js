@@ -9,6 +9,17 @@ function help(json, parameter) {
   })
 }
 
+function list(json, parameter) {
+  /* Empty parameter */
+  Object.keys(users).forEach( function(id) {
+    if(users[id].uid === this.id) {
+      $('#messages').append($('<li></li>').attr('class', 'notification').text('[' + users[id].uid + '] ' + users[id].name + ' (me)'))
+    }else {
+      $('#messages').append($('<li></li>').attr('class', 'notification').text('[' + users[id].uid + '] ' + users[id].name))
+    }
+  })
+}
+
 function setName(json, parameter) {
   /* Parameter is the new name */
   var completeString = ""

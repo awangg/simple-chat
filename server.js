@@ -11,21 +11,28 @@ app.get('/', function(req, res) {
 })
 
 /* Listening */
-var port = process.env.PORT || 80
+var port = process.env.PORT || 8081
 server.listen(port, function() {
   console.log('Listening on ' + port)
 })
 
+var users = {}
+
 /* Socket */
 io.on('connection', function(socket) {
   var id = Math.floor(Math.random() * 1000000000)
-  var name = ""
+  users[id] = {
+    name: id,
+    uid: id
+  }
 
   socket.emit('id', id)
+  socket.emit('currentUsers', users)
   socket.broadcast.emit('newuser', id)
 
   socket.on('disconnect', function() {
     io.emit('lostuser', id)
+    delete users[id]
   })
 
   socket.on('message', function(data) {
@@ -33,11 +40,12 @@ io.on('connection', function(socket) {
   })
 
   socket.on('changeName', function(data) {
-    name = data.name
+    users[data.id].name = data.name.trim()
+    io.emit('nameChange', { id: data.id, name: data.name.trim() })
     io.emit('message', { type: 'notification', payload: data.payload })
   })
 
   socket.on('emphasizeMessage', function(data) {
-    io.emit( 'emphasis', { name: data.name, payload: data.payload })
+    io.emit( 'emphasis', { type: 'emphasis', name: data.name, payload: data.payload })
   })
 })
