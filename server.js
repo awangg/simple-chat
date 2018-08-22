@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
   socket.broadcast.emit('newuser', id)
 
   socket.on('disconnect', function() {
-    io.emit('lostuser', id)
+    io.emit('lostuser', { id: id, name: users[id].name })
     delete users[id]
   })
 

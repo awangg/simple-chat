@@ -9,5 +9,5 @@ var config = {
     { "command": "/mute [id]", "description": "Removes future messages from the specified id (N/I)", "security": "ALL", "function": "mute" },
     { "command": "/mute [id]", "description": "Removes user from mute list (N/I)", "security": "ALL", "function": "unmute" }
   ],
-  "command_list": [ "/help", "/list", "/setName", "/emphasize", "/getId", "/getName", "/mute", "/unmute" ]
+  "command_list": [ "/help", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute" ]
 }

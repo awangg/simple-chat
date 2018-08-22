@@ -31,9 +31,9 @@ $(function() {
     users[incomingId] = { name: incomingId, uid: incomingId }
   })
 
-  socket.on('lostuser', function(exitingId) {
-    $('#messages').append($('<li></li>').attr('class', 'notification').text('User #' + exitingId + ' has left'))
-    delete users[exitingId]
+  socket.on('lostuser', function(data) {
+    $('#messages').append($('<li></li>').attr('class', 'notification').text('User ' + data.name + ' (#' + data.id + ') has left'))
+    delete users[data.id]
   })
 
   $('form').submit( function() {
@@ -42,9 +42,9 @@ $(function() {
     if(incomingMessage.charAt(0) == '/') {
       /* Command */
       var parameters = incomingMessage.split(' ')
-      if(commands.includes(parameters[0])) {
+      if(commands.includes(parameters[0].toLowerCase())) {
         try {
-          window[descriptiveCommands[commands.indexOf(parameters[0])].function](descriptiveCommands, parameters.slice(1))
+          window[descriptiveCommands[commands.indexOf(parameters[0].toLowerCase())].function](descriptiveCommands, parameters.slice(1))
         } catch (err) {
           $('#messages').append($('<li></li>').attr('class', 'error').text('Invalid Command'))
         }
@@ -86,7 +86,7 @@ $(function() {
         if(id === data.id) {
 
           $('#messages').append($('<li></li>')
-            .attr('class', 'row ml-2')
+            .attr('class', 'row ml-1 mt-1')
             .css('width', '50%')
             .append($('<div></div>')
               .attr('class', 'msg-container')
@@ -104,7 +104,7 @@ $(function() {
                 .attr('class', 'msg-text')
                 .css('word-break', 'break-all')
                 .append($('<h6></h6>')
-                  .text('Me')
+                  .text(data.name + ' (me)')
                 )
                 .append($('<p></p>')
                   .text(data.payload)
@@ -116,8 +116,9 @@ $(function() {
         }else {
 
           $('#messages').append($('<li></li>')
-            .attr('class', 'row mr-1')
+            .attr('class', 'row pr-1 mt-2')
             .css('float', 'right')
+            .css('background-color', '#efefef')
             .css('width', '100%')
             .append($('<div></div>')
               .attr('class', 'msg-container row justify-content-end')
