@@ -1,10 +1,11 @@
+/* Config */
 var conf = config
 var descriptiveCommands = conf.extended_command_list
 var commands = conf.command_list
 
+/* User-specific information */
 var id = -1
 var name = ""
-
 var users = []
 var muted = []
 
