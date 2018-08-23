@@ -98,14 +98,14 @@ io.on('connection', function(socket) {
   socket.on('globalMute', function(data) {
     if(authedUsers.includes(data.actorId)) {
       globallyMuted.push(data.victimId)
-      io.emit('success', { payload: '#' + data.victimId + ' was muted' })
+      io.emit('success', { payload: data.victimId + ' was muted' })
     }
   })
 
   socket.on('globalUnmute', function(data) {
     if(authedUsers.includes(data.actorId)) {
       globallyMuted.splice(globallyMuted.indexOf(data.victimId), 1)
-      io.emit('success', { payload: '#' + data.victimId + ' was unmuted' })
+      io.emit('success', { payload: data.victimId + ' was unmuted' })
     }
   })
 
