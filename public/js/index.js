@@ -19,7 +19,7 @@ $(function() {
 
   /* Display Original Messages */
   help()
-  $('#messages').append($('<li></li>').attr('class', 'emphasized').text('Set your name or you will be muted')).append($('<hr>'))
+  $('#messages').append($('<li></li>').attr('class', 'emphasized').text('Set your name or you will be kicked')).append($('<hr>'))
 
   socket.on('id', function(newId) {
     id = newId
