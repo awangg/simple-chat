@@ -17,6 +17,10 @@ $(function() {
   /* Set height to not encroach on input area */
   $('#messages').css('height', $(document).height() - 80)
 
+  /* Display Original Messages */
+  help()
+  $('#messages').append($('<li></li>').attr('class', 'emphasized').text('Set your name or you will be muted')).append($('<hr>'))
+
   socket.on('id', function(newId) {
     id = newId
     name = id
