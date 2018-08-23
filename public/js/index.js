@@ -6,9 +6,9 @@ var commands = conf.command_list
 /* User-specific information */
 var id = -1
 var name = ""
-var avatarNum = Math.floor(Math.random() * 8) + 1
+var avatarNum = Math.floor(Math.random() * 13) + 1
 var users = []
-var muted = []
+var muted =
 
 var socket = io()
 
