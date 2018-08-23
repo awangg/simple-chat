@@ -105,6 +105,18 @@ function promote(json, parameter) {
   checkAuth()
 }
 
+function warn(json, parameter) {
+  console.log('call')
+  socket.emit('warn', { actorId: id, victimId: parameter[0], payload: buildString(parameter.slice(1))})
+  console.log('server emit')
+  checkAuth()
+}
+
+function kick(json, parameter) {
+  socket.emit('kick', { actorId: id, victimId: parameter[0] })
+  checkAuth()
+}
+
 /* Helper Functions */
 function buildString(arr) {
   var completeString = ""

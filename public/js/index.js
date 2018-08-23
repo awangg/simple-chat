@@ -176,6 +176,16 @@ $(function() {
     $('#messages').append($('<li></li>').attr('class', 'error return').text('Incorrect passphrase'))
     moveToBottom()
   })
+
+  socket.on('warning', function(data) {
+    $('#messages').append($('<li></li>').attr('class', 'error return').text('You were warned by ' + data.actor + ': ' + data.payload))
+    moveToBottom()
+  })
+
+  socket.on('kicked', function() {
+    $('#messages').append($('<li></li>').attr('class', 'error return').text('You were kicked from the server.'))
+    moveToBottom()
+  })
 })
 
 /* Helper Functions */

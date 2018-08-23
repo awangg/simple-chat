@@ -8,14 +8,16 @@ var config = {
     { "command": "/getId [name]", "description": "Gets the id for the specified name", "security": true, "function": "getId" },
     { "command": "/getName [id]", "description": "Gets the name for the specified id", "security": true, "function": "getName" },
     { "command": "/mute [id]", "description": "Removes future messages from the specified id", "security": true, "function": "mute" },
-    { "command": "/unmute [id]", "description": "Removes user from mute list", "security": true, "function": "unmute" },
+    { "command": "/unmute [id]", "description": "Removes specified user from mute list", "security": true, "function": "unmute" },
     { "command": "/auth [password]", "description": "Grants user authorization for higher level commands", "security": true, "function": "auth" },
     { "command": "/gmute [id]", "description": "Prevents user from sending messages globally", "security": false, "function": "gmute"},
     { "command": "/gunmute [id]", "description": "Removes user from global mute list", "security": false, "function": "gUnmute"},
     { "command": "/freezeThread", "description": "Freezes thread in current state", "security": false, "function": "freeze"},
     { "command": "/unfreezeThread", "description": "Unfreezes thread", "security": false, "function": "unfreeze"},
-    { "command": "/promote", "description": "Grants user administrator access", "security": false, "function": "promote"},
+    { "command": "/promote [id]", "description": "Grants user administrator access", "security": false, "function": "promote"},
     { "command": "/down [minutes]", "description": "Notifies users when the thread will go down", "security": false, "function": "informDown"},
+    { "command": "/warn [id] [message]", "description": "Warns the specified user", "security": false, "function": "warn"},
+    { "command": "/kick [id]", "description": "Disconnects the specified user", "security": false, "function": "kick"},
   ],
-  "command_list": [ "/help", "/afk", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute", "/auth", "/gmute", "/gunmute", "/freezethread", "/unfreezethread", "/promote", "/down" ]
+  "command_list": [ "/help", "/afk", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute", "/auth", "/gmute", "/gunmute", "/freezethread", "/unfreezethread", "/promote", "/down", "/warn", "/kick" ]
 }

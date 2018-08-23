@@ -136,4 +136,30 @@ io.on('connection', function(socket) {
       socket.emit('success', { payload: 'User promoted' })
     }
   })
+
+  socket.on('warn', function(data) {
+    console.log('asdf')
+    if(authedUsers.includes(data.actorId)) {
+      console.log('run')
+      io.to(data.victimId).emit('warning', { payload: data.payload, actor: users[data.actorId].name })
+      console.log('emitted')
+      socket.emit('success', { payload: 'User warned '})
+      console.log('emitted 2')
+    }
+  })
+
+  socket.on('kick', function(data) {
+    if(authedUsers.includes(data.actorId) && users[data.victimId] !== null) {
+      Object.keys(io.sockets.sockets).forEach( function(sock) {
+        if(sock === data.victimId) {
+          var victimName = users[data.victimId].name
+          var actorName = users[data.actorId].name
+          io.emit('success', { payload: 'User ' + victimName + ' [' + data.victimId + '] was kicked by ' + actorName })
+          io.to(data.victimId).emit('kicked')
+          io.sockets.sockets[sock].disconnect(true)
+          delete users[data.victimId]
+        }
+      })
+    }
+  })
 })
