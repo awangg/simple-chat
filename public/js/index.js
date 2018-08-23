@@ -27,13 +27,13 @@ $(function() {
   })
 
   socket.on('newuser', function(incomingId) {
-    $('#messages').append($('<li></li>').attr('class', 'notification return').html('<span> User #' + incomingId + ' has arrived <small style="font-size: 10px">' + new Date().getHours() + ':' + getTwoDigits(new Date().getMinutes()) + '</small></span>'))
+    $('#messages').append($('<li></li>').attr('class', 'notification return').html('<span> User ' + incomingId + ' has arrived <small style="font-size: 10px">' + new Date().getHours() + ':' + getTwoDigits(new Date().getMinutes()) + '</small></span>'))
     users[incomingId] = { name: incomingId, uid: incomingId }
     moveToBottom()
   })
 
   socket.on('lostuser', function(data) {
-    $('#messages').append($('<li></li>').attr('class', 'notification return').html('<span> User ' + data.name + ' (#' + data.id + ') has left <small style="font-size: 10px">' + new Date().getHours() + ':' + getTwoDigits(new Date().getMinutes()) + '</small></span>'))
+    $('#messages').append($('<li></li>').attr('class', 'notification return').html('<span> User ' + data.name + ' (' + data.id + ') has left <small style="font-size: 10px">' + new Date().getHours() + ':' + getTwoDigits(new Date().getMinutes()) + '</small></span>'))
     delete users[data.id]
     moveToBottom()
   })
