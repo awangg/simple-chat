@@ -55,6 +55,7 @@ form {
 }
 
 .notification {
+  margin-top: 1rem;
   background-color: #fffec6;
   font-style: italic;
 }
