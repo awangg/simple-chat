@@ -9,7 +9,7 @@ var adminAuth = false
 function help(json, parameter) {
   /* Empty parameter */
   descriptiveCommands.forEach( function(object) {
-    if(object.security) $('#messages').append($('<li></li>').attr('class', 'return').text(object.command + ' - ' + object.description))
+    if(object.security) $('#messages').append($('<li></li>').attr('class', 'return').html('<span class="information"> <span class="command-example">' + object.command + '</span> - ' + object.description + '</span>'))
   })
 }
 
@@ -111,6 +111,6 @@ function buildString(arr) {
 
 function checkAuth() {
   if(!adminAuth) {
-    $('#messages').append($('<li></li>').attr('class', 'error').text('You do not have access to that command'))
+    $('#messages').append($('<li></li>').attr('class', 'error return').text('You do not have access to that command'))
   }
 }
