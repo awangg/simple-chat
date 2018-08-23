@@ -2,6 +2,8 @@ var conf = config;
 var descriptiveCommands = conf.extended_command_list
 var commands = conf.command_list
 
+var adminAuth = false
+
 /* Command Functions */
 
 function help(json, parameter) {
@@ -9,6 +11,10 @@ function help(json, parameter) {
   descriptiveCommands.forEach( function(object) {
     if(object.security) $('#messages').append($('<li></li>').attr('class', 'return').text(object.command + ' - ' + object.description))
   })
+}
+
+function afk(json, parameter) {
+  socket.emit('afkNotify', { id: id, name: name } )
 }
 
 function list(json, parameter) {
@@ -32,7 +38,7 @@ function setName(json, parameter) {
 function emphasize(json, parameter) {
   /* Parameter is the specified message */
   var payloadString = buildString(parameter)
-  socket.emit('emphasizeMessage', { name: name, payload: payloadString })
+  socket.emit('emphasizeMessage', { id: id, name: name, payload: payloadString })
 }
 
 function getId(json, parameter) {
@@ -67,23 +73,15 @@ function unmute(json, parameter) {
 
 function auth(json, parameter) {
   socket.emit('authAttempt', { id: id, passphrase: parameter[0] })
-  socket.on('failedAuth', function() {
-    $('#messages').append($('<li></li>').attr('class', 'error return').text('Incorrect Passphrase'))
-    moveToBottom()
-  })
-  socket.on('successAuth', function() {
-    $('#messages').append($('<li></li>').attr('class', 'return').text('Authorization successful'))
-    descriptiveCommands.forEach( function(object) {
-      if(object.security === false) {
-        object.security = true
-      }
-    })
-    moveToBottom()
-  })
 }
 
 function gmute(json, parameter) {
   socket.emit('globalMute', { actorId: id, victimId: parameter[0] })
+  checkAuth()
+}
+
+function gUnmute(json, parameter) {
+  socket.emit('globalUnmute', { actorId: id, victimId: parameter[0] })
   checkAuth()
 }
 
@@ -97,6 +95,11 @@ function unfreeze(json, parameter) {
   checkAuth()
 }
 
+function informDown(json, parameter) {
+  socket.emit('informDown', { actorId: id, minutes: parameter[0] } )
+  checkAuth()
+}
+
 /* Helper Functions */
 function buildString(arr) {
   var completeString = ""
@@ -107,8 +110,7 @@ function buildString(arr) {
 }
 
 function checkAuth() {
-  socket.on('failedAuth', function(data) {
-    $('#messages').append($('<li></li>').attr('class', 'error return').text(data.payload))
-    moveToBottom()
-  })
+  if(!adminAuth) {
+    $('#messages').append($('<li></li>').attr('class', 'error').text('You do not have access to that command'))
+  }
 }

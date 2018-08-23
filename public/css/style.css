@@ -61,6 +61,11 @@ form {
   font-style: italic;
 }
 
+.success {
+  background-color: #0f0;
+  color: #000;
+}
+
 .error {
   background-color: #f00;
   color: #fff;

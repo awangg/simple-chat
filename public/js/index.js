@@ -160,6 +160,23 @@ $(function() {
     $('#messages').append($('<li></li>').attr('class', 'return').css('font-size', '24px').css('font-weight', 'bold').text(data.payload))
     moveToBottom()
   })
+
+  socket.on('successAuth', function() {
+    adminAuth = true
+    name += ' [Admin]'
+    $('#messages').append($('<li></li>').attr('class', 'success return').text('Authorization successful'))
+    descriptiveCommands.forEach( function(object) {
+      if(object.security === false) {
+        object.security = true
+      }
+    })
+    moveToBottom()
+  })
+
+  socket.on('failedAuth', function() {
+    $('#messages').append($('<li></li>').attr('class', 'error return').text('Incorrect passphrase'))
+    moveToBottom()
+  })
 })
 
 function moveToBottom() {

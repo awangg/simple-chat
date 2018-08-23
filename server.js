@@ -51,6 +51,12 @@ io.on('connection', function(socket) {
     delete users[id]
   })
 
+  socket.on('afkNotify', function(data) {
+    if(!freeze && !globallyMuted.includes(parseInt(data.id))) {
+      io.emit('message', { type: 'notification', payload: 'User ' + data.name + ' [' + data.id + '] is AFK' })
+    }
+  })
+
   socket.on('message', function(data) {
     if(!globallyMuted.includes(parseInt(data.userId)) && !freeze) {
       io.emit('message', { type: 'message', id: data.userId, name: data.userName, avatarId: data.imageId, payload: data.message })
@@ -64,7 +70,9 @@ io.on('connection', function(socket) {
   })
 
   socket.on('emphasizeMessage', function(data) {
-    io.emit('message', { type: 'emphasis', name: data.name, payload: data.payload })
+    if(!freeze && !globallyMuted.includes(parseInt(data.id))) {
+      io.emit('message', { type: 'emphasis', name: data.name, payload: data.payload })
+    }
   })
 
   socket.on('display', function(data) {
@@ -77,11 +85,11 @@ io.on('connection', function(socket) {
         throw err
       }
       if(key === null) {
-        io.emit('failedAuth')
+        socket.emit('failedAuth')
       }else {
         if(key.phrase === data.passphrase) {
           authedUsers.push(data.id)
-          io.emit('successAuth')
+          socket.emit('successAuth')
         }
       }
     })
@@ -91,8 +99,13 @@ io.on('connection', function(socket) {
     if(authedUsers.includes(data.actorId)) {
       globallyMuted.push(parseInt(data.victimId))
       io.emit('success', { payload: '#' + data.victimId + ' was muted' })
-    }else {
-      io.emit('failedAuth', { payload: 'You are not authorized to use this command '})
+    }
+  })
+
+  socket.on('globalUnmute', function(data) {
+    if(authedUsers.includes(data.actorId)) {
+      globallyMuted.splice(globallyMuted.indexOf(parseInt(data.victimId)), 1)
+      io.emit('success', { payload: '#' + data.victimId + ' was unmuted' })
     }
   })
 
@@ -100,8 +113,6 @@ io.on('connection', function(socket) {
     if(authedUsers.includes(data.actorId)) {
       freeze = true
       io.emit('success', { payload: 'Thread frozen' })
-    }else {
-      io.emit('failedAuth', { payload: 'You are not authorized to use this command '})
     }
   })
 
@@ -109,8 +120,12 @@ io.on('connection', function(socket) {
     if(authedUsers.includes(data.actorId)) {
       freeze = false
       io.emit('success', { payload: 'Thread unfrozen' })
-    }else {
-      io.emit('failedAuth', { payload: 'You are not authorized to use this command '})
+    }
+  })
+
+  socket.on('informDown', function(data) {
+    if(authedUsers.includes(data.actorId)) {
+      io.emit('success', { payload: 'Server will be going down in ' + data.minutes + ' minute(s)' })
     }
   })
 })
