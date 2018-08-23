@@ -8,7 +8,7 @@ var id = -1
 var name = ""
 var avatarNum = Math.floor(Math.random() * 13) + 1
 var users = []
-var muted =
+var muted = []
 
 var socket = io()
 
