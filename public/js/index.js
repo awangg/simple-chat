@@ -117,8 +117,7 @@ $(function() {
         }else {
 
           $('#messages').append($('<li></li>')
-            .attr('class', 'row pr-4 mt-2')
-            .css('float', 'right')
+            .attr('class', 'row pr-2 mt-2')
             .css('background-color', '#efefef')
             .css('width', '100%')
             .append($('<div></div>')
