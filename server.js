@@ -133,18 +133,14 @@ io.on('connection', function(socket) {
     if(authedUsers.includes(data.actorId) && !authedUsers.includes(data.victimId)) {
       authedUsers.push(data.victimId)
       io.to(data.victimId).emit('successAuth')
-      socket.emit('success', { payload: 'User promoted' })
+      socket.emit('message', { type: 'notification', payload: 'User promoted' })
     }
   })
 
   socket.on('warn', function(data) {
-    console.log('asdf')
     if(authedUsers.includes(data.actorId)) {
-      console.log('run')
       io.to(data.victimId).emit('warning', { payload: data.payload, actor: users[data.actorId].name })
-      console.log('emitted')
-      socket.emit('success', { payload: 'User warned '})
-      console.log('emitted 2')
+      socket.emit('message', { type: 'notification', payload: 'User warned '})
     }
   })
 
