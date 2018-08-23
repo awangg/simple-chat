@@ -17,15 +17,16 @@
     <form>
       <div class="form-row justify-content-center">
         <div class="col-md-8 input-group">
+          <div class="input-group-prepend">
+            <button class="btn btn-info" id="shiftButton" onclick="moveToBottom()"> <i class="fa fa-arrow-down"></i> </button>
+          </div>
           <input type="text" class="form-control" id="content" placeholder="Message..." autocomplete="off" />
           <div class="input-group-append">
-            <button type="submit" class="btn btn-primary"> <i class="fa fa-arrow-right"></i> </button>
+            <button type="submit" class="btn btn-success"> <i class="fa fa-arrow-right"></i> </button>
           </div>
         </div>
       </div>
     </form>
-
-    <button class="btn btn-primary" id="shiftButton" onclick="moveToBottom()"> <i class="fa fa-arrow-down"></i> </button>
 
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -27,12 +27,6 @@ form {
   padding: 5px 10px;
 }
 
-#shiftButton {
-  position: fixed;
-  bottom: 5px;
-  right: 15px;
-}
-
 /* Message Types */
 
 /* User message */
