@@ -14,7 +14,8 @@ var config = {
     { "command": "/gunmute [id]", "description": "Removes user from global mute list", "security": false, "function": "gUnmute"},
     { "command": "/freezeThread", "description": "Freezes thread in current state", "security": false, "function": "freeze"},
     { "command": "/unfreezeThread", "description": "Unfreezes thread", "security": false, "function": "unfreeze"},
+    { "command": "/promote", "description": "Grants user administrator access", "security": false, "function": "promote"},
     { "command": "/down [minutes]", "description": "Notifies users when the thread will go down", "security": false, "function": "informDown"},
   ],
-  "command_list": [ "/help", "/afk", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute", "/auth", "/gmute", "/gunmute", "/freezethread", "/unfreezethread", "/down" ]
+  "command_list": [ "/help", "/afk", "/list", "/setname", "/emphasize", "/getid", "/getname", "/mute", "/unmute", "/auth", "/gmute", "/gunmute", "/freezethread", "/unfreezethread", "/promote", "/down" ]
 }

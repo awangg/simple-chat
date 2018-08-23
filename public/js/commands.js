@@ -59,12 +59,12 @@ function getName(json, parameter) {
 }
 
 function mute(json, parameter) {
-  muted.push(parseInt(parameter[0]))
+  muted.push(parameter[0])
   $('#messages').append($('<li></li>').attr('class', 'return').text('You muted user #' + parameter))
 }
 
 function unmute(json, parameter) {
-  var param = parseInt(parameter)
+  var param = parameter[0]
   if(muted.includes(param)) {
     muted.splice(muted.indexOf(param), 1)
   }
@@ -97,6 +97,11 @@ function unfreeze(json, parameter) {
 
 function informDown(json, parameter) {
   socket.emit('informDown', { actorId: id, minutes: parameter[0] } )
+  checkAuth()
+}
+
+function promote(json, parameter) {
+  socket.emit('promotion', { actorId: id, victimId: parameter[0] })
   checkAuth()
 }
 

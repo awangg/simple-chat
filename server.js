@@ -33,7 +33,7 @@ var Key = mongoose.model('keyphrase', keySchema)
 
 /* Socket */
 io.on('connection', function(socket) {
-  var id = Math.floor(Math.random() * 1000000000)
+  var id = socket.id
   users[id] = {
     name: id,
     uid: id
@@ -52,13 +52,13 @@ io.on('connection', function(socket) {
   })
 
   socket.on('afkNotify', function(data) {
-    if(!freeze && !globallyMuted.includes(parseInt(data.id))) {
+    if(!freeze && !globallyMuted.includes(data.id)) {
       io.emit('message', { type: 'notification', payload: 'User ' + data.name + ' [' + data.id + '] is AFK' })
     }
   })
 
   socket.on('message', function(data) {
-    if(!globallyMuted.includes(parseInt(data.userId)) && !freeze) {
+    if(!globallyMuted.includes(data.userId) && !freeze) {
       io.emit('message', { type: 'message', id: data.userId, name: data.userName, avatarId: data.imageId, payload: data.message })
     }
   })
@@ -70,7 +70,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('emphasizeMessage', function(data) {
-    if(!freeze && !globallyMuted.includes(parseInt(data.id))) {
+    if(!freeze && !globallyMuted.includes(data.id)) {
       io.emit('message', { type: 'emphasis', name: data.name, payload: data.payload })
     }
   })
@@ -97,14 +97,14 @@ io.on('connection', function(socket) {
 
   socket.on('globalMute', function(data) {
     if(authedUsers.includes(data.actorId)) {
-      globallyMuted.push(parseInt(data.victimId))
+      globallyMuted.push(data.victimId)
       io.emit('success', { payload: '#' + data.victimId + ' was muted' })
     }
   })
 
   socket.on('globalUnmute', function(data) {
     if(authedUsers.includes(data.actorId)) {
-      globallyMuted.splice(globallyMuted.indexOf(parseInt(data.victimId)), 1)
+      globallyMuted.splice(globallyMuted.indexOf(data.victimId), 1)
       io.emit('success', { payload: '#' + data.victimId + ' was unmuted' })
     }
   })
@@ -126,6 +126,14 @@ io.on('connection', function(socket) {
   socket.on('informDown', function(data) {
     if(authedUsers.includes(data.actorId)) {
       io.emit('success', { payload: 'Server will be going down in ' + data.minutes + ' minute(s)' })
+    }
+  })
+
+  socket.on('promotion', function(data) {
+    if(authedUsers.includes(data.actorId) && !authedUsers.includes(data.victimId)) {
+      authedUsers.push(data.victimId)
+      io.to(data.victimId).emit('successAuth')
+      socket.emit('success', { payload: 'User promoted' })
     }
   })
 })
