@@ -27,13 +27,13 @@ $(function() {
   })
 
   socket.on('newuser', function(incomingId) {
-    $('#messages').append($('<li></li>').attr('class', 'notification return').text('User #' + incomingId + ' has arrived'))
+    $('#messages').append($('<li></li>').attr('class', 'notification return').html('<span> User #' + incomingId + ' has arrived <small style="font-size: 10px">' + new Date().getHours() + ':' + getTwoDigits(new Date().getMinutes()) + '</small></span>'))
     users[incomingId] = { name: incomingId, uid: incomingId }
     moveToBottom()
   })
 
   socket.on('lostuser', function(data) {
-    $('#messages').append($('<li></li>').attr('class', 'notification return').text('User ' + data.name + ' (#' + data.id + ') has left'))
+    $('#messages').append($('<li></li>').attr('class', 'notification return').html('<span> User ' + data.name + ' (#' + data.id + ') has left <small style="font-size: 10px">' + new Date().getHours() + ':' + getTwoDigits(new Date().getMinutes()) + '</small></span>'))
     delete users[data.id]
     moveToBottom()
   })
@@ -105,7 +105,7 @@ $(function() {
                 .attr('class', 'msg-text')
                 .css('word-break', 'break-all')
                 .append($('<h6></h6>')
-                  .text(data.name + ' (me)')
+                  .html(data.name + ' (me) <small style="font-size: 10px">' + new Date().getHours() + ':' + getTwoDigits(new Date().getMinutes()) + '</small>')
                 )
                 .append($('<p></p>')
                   .text(data.payload)
@@ -117,18 +117,18 @@ $(function() {
         }else {
 
           $('#messages').append($('<li></li>')
-            .attr('class', 'row pr-1 mt-2')
+            .attr('class', 'row pr-4 mt-2')
             .css('float', 'right')
             .css('background-color', '#efefef')
             .css('width', '100%')
             .append($('<div></div>')
-              .attr('class', 'msg-container row justify-content-end')
+              .attr('class', 'msg-container justify-content-end')
               .append($('<div></div>')
                 .attr('class', 'msg-text text-right')
                 .css('word-break', 'break-all')
                 .css('width', '50%')
                 .append($('<h6></h6>')
-                  .text(data.name)
+                  .html('<small style="font-size: 10px">' + new Date().getHours() + ':' + getTwoDigits(new Date().getMinutes()) + '</small> ' + data.name)
                 )
                 .append($('<p></p>')
                   .text(data.payload)
@@ -179,7 +179,17 @@ $(function() {
   })
 })
 
+/* Helper Functions */
+
 function moveToBottom() {
   var box = document.getElementById('messages')
   box.scrollTop = box.scrollHeight
+}
+
+function getTwoDigits(num) {
+  if(num < 10) {
+    return '0' + num
+  }else {
+    return num
+  }
 }
