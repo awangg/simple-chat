@@ -145,7 +145,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('kick', function(data) {
-    if(authedUsers.includes(data.actorId) && users[data.victimId] !== null) {
+    if(authedUsers.includes(data.actorId) && !authedUsers.includes(data.victimId) && users[data.victimId] !== null) {
       Object.keys(io.sockets.sockets).forEach( function(sock) {
         if(sock === data.victimId) {
           var victimName = users[data.victimId].name
